@@ -126,12 +126,23 @@ def get_report_filters(report_filters):
     filters = [
         ["Sales Invoice", "company", "=", report_filters.get("company")],
         ["Sales Invoice", "posting_date", "<=", report_filters.get("posting_date")],
+        [
+            "Sales Invoice",
+            "update_stock",
+            "=",
+            report_filters.get("stock_updated"),
+        ],
         ["Sales Invoice", "docstatus", "=", 1],
     ]
 
     if report_filters.get("sales_invoice"):
         filters.append(
             ["Sales Invoice", "name", "=", report_filters.get("sales_invoice")]
+        )
+
+    if report_filters.get("customer"):
+        filters.append(
+            ["Sales Invoice", "customer", "=", report_filters.get("customer")]
         )
 
     return filters
