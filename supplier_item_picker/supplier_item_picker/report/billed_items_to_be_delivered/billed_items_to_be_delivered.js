@@ -25,5 +25,16 @@ frappe.query_reports["Billed Items To Be Delivered"] = {
 			fieldtype: "Link",
 			options: "Sales Invoice",
 		},
+		{
+			label: __("Customer"),
+			fieldname: "customer",
+			fieldtype: "Link",
+			options: "Customer",
+		},
+		{
+			label: __("Stock Updated"),
+			fieldname: "stock_updated",
+			fieldtype: "Check",
+		},
 	],
 };
