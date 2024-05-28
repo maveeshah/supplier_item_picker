@@ -1,0 +1,118 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"3zcA47ENHx\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Uymatiao Trading Corporation</span>\",\"col\":12}},{\"id\":\"WVphWwMNoq\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Invoice List\",\"col\":4}},{\"id\":\"6ziEErHn3B\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice List\",\"col\":4}},{\"id\":\"tIOBhsJFMc\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Receipt List\",\"col\":4}},{\"id\":\"niDn3IDuvD\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Create New Purchase Order\",\"col\":4}},{\"id\":\"2E9tK1UiOb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Create New Sales Invoice\",\"col\":4}},{\"id\":\"zXmlHBNmT4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Create New Purchase Receipt\",\"col\":4}},{\"id\":\"ci1aRjKEC9\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"36R05UZfno\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports</b></span>\",\"col\":12}},{\"id\":\"9bLDJO2O_i\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}}]",
+ "creation": "2024-05-28 12:30:52.254674",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "project",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Uymatiao Trading Corporation",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 3,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Items To be Delivered",
+   "link_count": 0,
+   "link_to": "Billed Items To Be Delivered",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Items To be Received",
+   "link_count": 0,
+   "link_to": "Billed Items To Be Received",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Discounted Invoices",
+   "link_count": 0,
+   "link_to": "Item-wise Sales Invoice with Margin and Discount",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-05-28 12:37:43.160131",
+ "modified_by": "Administrator",
+ "module": "Supplier Item Picker",
+ "name": "Uymatiao Trading Corporation",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 39.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Purchase Invoice List",
+   "link_to": "Purchase Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "Create New Purchase Receipt",
+   "link_to": "Purchase Receipt",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Sales Invoice List",
+   "link_to": "Sales Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Purchase Receipt List",
+   "link_to": "Purchase Receipt",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "Create New Purchase Order",
+   "link_to": "Purchase Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "Create New Sales Invoice",
+   "link_to": "Sales Invoice",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Uymatiao Trading Corporation"
+}
