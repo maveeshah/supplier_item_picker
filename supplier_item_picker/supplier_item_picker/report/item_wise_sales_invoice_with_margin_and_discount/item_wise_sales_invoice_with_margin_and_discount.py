@@ -133,7 +133,8 @@ def get_data(filters):
         ON
             si.name = sip.parent
         WHERE 
-            si.docstatus = 1 
+            si.docstatus = 1
+            AND (sii.margin_rate_or_amount > 0 OR sii.discount_amount > 0)
             {conditions}
         ORDER BY 
             si.posting_date DESC
@@ -147,10 +148,6 @@ def get_data(filters):
 
 def get_conditions(filters):
     conditions = ""
-
-    if filters.get("sales_invoice"):
-        conditions += " AND si.name = %(sales_invoice)s"
-
     if filters.get("customer"):
         conditions += " AND si.customer = %(customer)s"
     if filters.get("customer_group"):
