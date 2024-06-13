@@ -12,6 +12,7 @@ app_license = "mit"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/supplier_item_picker/css/supplier_item_picker.css"
 # app_include_js = "/assets/supplier_item_picker/js/supplier_item_picker.js"
+app_include_js = "/public/js/JsBarcode.all.min.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/supplier_item_picker/css/supplier_item_picker.css"
@@ -29,7 +30,10 @@ app_license = "mit"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-doctype_js = {"Purchase Order" : "public/js/purchase_order.js"}
+doctype_js = {
+    "Purchase Order": "public/js/purchase_order.js",
+    "Item": "public/js/item.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -227,4 +231,3 @@ doctype_js = {"Purchase Order" : "public/js/purchase_order.js"}
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
