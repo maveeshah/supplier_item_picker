@@ -12,7 +12,7 @@ app_license = "mit"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/supplier_item_picker/css/supplier_item_picker.css"
 # app_include_js = "/assets/supplier_item_picker/js/supplier_item_picker.js"
-app_include_js = "/public/js/JsBarcode.all.min.js"
+# app_include_js = "/public/js/JsBarcode.all.min.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/supplier_item_picker/css/supplier_item_picker.css"

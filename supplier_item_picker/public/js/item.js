@@ -1,5 +1,6 @@
 frappe.ui.form.on('Item', {
     refresh: function (frm) {
+        print("Usman is Testing")
         frm.add_custom_button(__('Generate Barcode from Item Name'), function () {
             var cur_doc = frm.doc;
             if (cur_doc.name) {
@@ -56,3 +57,33 @@ frappe.ui.form.on('Item', {
         });
     }
 });
+
+frappe.ui.form.on("Item Barcode", {
+	barcode: function (frm, cdt, cdn) {
+		var doc = locals[cdt][cdn];
+        console.log("in barcode", doc.barcode);
+		// generate_barcode(doc)
+	},
+    barcode_type: function (frm, cdt, cdn) {
+		var doc = locals[cdt][cdn];
+        console.log("in barcode_type", doc.barcode_type);
+		// generate_barcode(doc)
+	},
+});
+
+function generate_barcode(doc) {
+    if (doc.barcode && doc.barcode_type == 'EAN') {
+        console.log("in function");
+        $(frm.fields_dict['custom_barcode_image'].wrapper).html('<svg id="ean13"></svg>');
+        $.getScript("https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js", function (data, textStatus, jqxhr) {
+            JsBarcode("#ean13", doc.barcode, {
+                background: "#FFFFFF"
+            });
+            var svg = $('#ean13').parent().html();
+            frappe.model.set_value(cdt, cdn, "custom_barcode_svg", svg);
+            frappe.model.set_value(cdt, cdn, "custom_barcode_generated", 1);
+
+            // cur_frm.save();
+        });
+    } 
+}
