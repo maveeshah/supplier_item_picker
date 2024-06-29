@@ -53,22 +53,22 @@ function select_items_dialog(frm, items) {
                   <thead>
                       <tr>
                           <th><input type="checkbox" id="select-all-items" /> ${__(
-                            "Select All"
-                          )}</th>
+    "Select All"
+  )}</th>
                           <th>${__("Item Name")}</th>
                       </tr>
                   </thead>
                   <tbody>
                       ${items
-                        .map(
-                          (item) => `
+      .map(
+        (item) => `
                           <tr>
                               <td><input type="checkbox" data-item-name="${item.parent}" class="item-check"></td>
                               <td>${item.parent}</td>
                           </tr>
                       `
-                        )
-                        .join("")}
+      )
+      .join("")}
                   </tbody>
               </table>
           </div>
@@ -105,8 +105,6 @@ function add_selected_items_to_form(frm, selected_items) {
     args: { items: selected_items },
     callback: function (r) {
       if (r.message && r.message.length > 0) {
-        console.log(r.message);
-        frm.clear_table("items");
         r.message.forEach((item) => {
           let row = frm.add_child("items");
           row.item_code = item.name;
@@ -182,24 +180,24 @@ function select_items_dialog(frm, items) {
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="select-all-items" /> ${__(
-                          "Select All"
-                        )}</th>
+    "Select All"
+  )}</th>
                         <th>${__("Item Code")}</th>
                         <th>${__("Item Name")}</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${items
-                      .map(
-                        (item) => `
+      .map(
+        (item) => `
                         <tr>
                             <td><input type="checkbox" data-item-name="${item.name}" data-item-code="${item.item_code}" class="item-check"></td>
                             <td>${item.name}</td>
                             <td>${item.item_name}</td>
                         </tr>
                     `
-                      )
-                      .join("")}
+      )
+      .join("")}
                 </tbody>
             </table>
         </div>
