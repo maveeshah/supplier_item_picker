@@ -233,8 +233,8 @@ function add_selected_items_to_form(frm, selected_items) {
     method: "supplier_item_picker.api.get_items_details",
     args: { items: selected_items },
     callback: function (r) {
-      frm.set_value("items", []);
-      frm.refresh_field("items");
+      // frm.set_value("items", []);
+      // frm.refresh_field("items");
       if (r.message && r.message.length > 0) {
         r.message.forEach((item) => {
           let row = frm.add_child("items");
