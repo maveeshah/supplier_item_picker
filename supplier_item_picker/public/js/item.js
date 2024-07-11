@@ -1,5 +1,14 @@
 
 frappe.ui.form.on("Item Barcode", {
+    form_render: function (frm, cdt, cdn) {
+        var d = locals[cdt][cdn],
+            wrapper = frm.fields_dict[d.parentfield].grid.grid_rows_by_docname[cdn].grid_form.fields_dict['custom_test_image'].wrapper;
+        var barcode = frappe.model.get_value(cdt, cdn, "custom_barcode_svg");
+        if (barcode) {
+            $(wrapper).html("<img src='" + barcode + "'>");
+        }
+
+    },
     custom_create_barcode: function (frm, cdt, cdn) {
         frappe.call({
             method: "supplier_item_picker.api.create_code",
@@ -13,9 +22,12 @@ frappe.ui.form.on("Item Barcode", {
                 frappe.model.set_value(cdt, cdn, "barcode", r.message.message.barcode);
 
                 frappe.model.set_value(cdt, cdn, "custom_barcode_svg", r.message.message.image);
-                html = `<div><html><img src="data:image/png;base64,${r.message.message.image}"/></html></div>`;
-                console.log(html);
-                frappe.model.set_value(cdt, cdn, "custom_test_image", html);
+
+                frappe.model.set_value(cdt, cdn, "custom_test_image", "<img src='" + r.message.message.image + "'>");
+
+                var d = locals[cdt][cdn],
+                    wrapper = frm.fields_dict[d.parentfield].grid.grid_rows_by_docname[cdn].grid_form.fields_dict['custom_test_image'].wrapper;
+                $(wrapper).html("<img src='" + r.message.message.image + "'>");
             }
         });
     }
