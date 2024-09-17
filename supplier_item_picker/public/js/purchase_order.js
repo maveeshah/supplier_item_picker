@@ -229,22 +229,25 @@ function select_items_dialog(frm, items) {
 }
 
 function add_selected_items_to_form(frm, selected_items) {
+  const existing_items = frm.doc.items.map(item => item.item_code);
+
   frappe.call({
     method: "supplier_item_picker.api.get_items_details",
     args: { items: selected_items },
     callback: function (r) {
-      // frm.set_value("items", []);
-      // frm.refresh_field("items");
       if (r.message && r.message.length > 0) {
         r.message.forEach((item) => {
-          let row = frm.add_child("items");
-          row.item_code = item.name;
-          row.item_name = item.item_name;
-          row.description = item.description || item.item_name;
-          row.rate = item.standard_rate || 0;
-          row.qty = 1; // Default quantity, adjust as needed
-          row.schedule_date = frappe.datetime.nowdate(); // Correct function for today's date
-          row.uom = item.stock_uom;
+          // Only add the item if it doesn't already exist in the table
+          if (!existing_items.includes(item.name)) {
+            let row = frm.add_child("items");
+            row.item_code = item.name;
+            row.item_name = item.item_name;
+            row.description = item.description || item.item_name;
+            row.rate = item.standard_rate || 0;
+            row.qty = 1; // Default quantity, adjust as needed
+            row.schedule_date = frappe.datetime.nowdate();
+            row.uom = item.stock_uom;
+          }
         });
         frm.refresh_field("items");
       } else {
@@ -255,3 +258,4 @@ function add_selected_items_to_form(frm, selected_items) {
     },
   });
 }
+
