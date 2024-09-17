@@ -16,9 +16,8 @@ def execute(filters=None):
 
     return columns, data
 
-
 def get_columns():
-    return [
+    columns = [
         {
             "label": _("Item"),
             "fieldname": "item_code",
@@ -45,64 +44,65 @@ def get_columns():
             "fieldtype": "Link",
             "options": "Brand",
             "width": 175,
-        },
-        {
-            "label": _("Display Warehouse"),
-            "fieldname": "display_warehouse",
-            "fieldtype": "Link",
-            "options": "Warehouse",
-            "width": 175,
-        },
-        {
-            "label": _("Storage Warehouse"),
-            "fieldname": "storage_warehouse",
-            "fieldtype": "Link",
-            "options": "Warehouse",
-            "width": 175,
-        },
-        {
-            "label": _("Display Qty"),
-            "fieldname": "display_qty",
-            "fieldtype": "Float",
-            "width": 150,
-        },
-        {
-            "label": _("Storage Qty"),
-            "fieldname": "storage_qty",
-            "fieldtype": "Float",
-            "width": 150,
-        },
+        }
     ]
+    
+    warehouses = get_warehouses()
+
+    for warehouse in warehouses:
+        columns.append({
+            "label": _(f"{warehouse} Qty"),
+            "fieldname": frappe.scrub(f"{warehouse}_qty"),
+            "fieldtype": "Float",
+            "width": 150,
+        })
+    
+    return columns
 
 
 def get_data(filters):
     conditions, values = get_conditions(filters)
-
+    
+    # Fetch all warehouses
+    warehouses = get_warehouses()
+    
+    # Create a dynamic SQL query to pivot the data
+    select_statements = []
+    for warehouse in warehouses:
+        select_statements.append(f"""
+            SUM(CASE WHEN sle.warehouse = '{warehouse}' THEN sle.actual_qty ELSE 0 END) AS `{frappe.scrub(warehouse)}_qty`
+        """)
+    
     query = f"""
         SELECT 
             sle.item_code,
             i.item_name,
             i.item_group,
             i.brand,
-            sle.warehouse as display_warehouse,
-            sle.warehouse as storage_warehouse,
-            sle.actual_qty as display_qty,
-            sle.actual_qty as storage_qty
-            FROM 
+            {', '.join(select_statements)}
+        FROM 
             `tabStock Ledger Entry` sle
         JOIN
             `tabItem` i ON sle.item_code = i.name
         WHERE
-            sle.name is not null
+            sle.docstatus = 1
+
             {conditions}
         GROUP BY 
-            sle.item_code, sle.warehouse
+            sle.item_code
     """
 
     data = frappe.db.sql(query, values, as_dict=True)
 
     return data
 
+
+def get_warehouses():
+    warehouses = frappe.db.sql("""
+        SELECT DISTINCT warehouse FROM `tabStock Ledger Entry`
+    """, as_dict=True)
+    
+    return [w['warehouse'] for w in warehouses]
 
 def get_conditions(filters):
     conditions = ""
