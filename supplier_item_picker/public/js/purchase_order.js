@@ -1,7 +1,7 @@
 frappe.ui.form.on("Purchase Order", {
   refresh: function (frm) {
     if (frm.doc.docstatus === 0 && !frm.doc.is_return) {
-      frm.add_custom_button(__("Fetch Supplier Items"), function () {
+      frm.add_custom_button(__("Get Supplier Items"), function () {
         let supplier = frm.doc.supplier;
         if (!supplier) {
           frappe.msgprint(__("Please select a supplier first."));
