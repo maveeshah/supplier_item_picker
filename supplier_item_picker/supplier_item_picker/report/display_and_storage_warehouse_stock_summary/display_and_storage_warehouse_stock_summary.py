@@ -46,6 +46,12 @@ def get_columns():
             "options": "Brand",
             "width": 175,
         },
+        {
+            "label": _("Total Quantity"),
+            "fieldname": "total_qty",
+            "fieldtype": "Float",
+            "width": 150,
+        },
     ]
 
     warehouses = get_warehouses()
@@ -83,7 +89,11 @@ def get_data(filters):
             SUM(CASE WHEN sle.warehouse = '{warehouse}' THEN sle.actual_qty ELSE 0 END) AS `{frappe.scrub(warehouse)}_qty`
         """
         )
-
+    select_statements.append(
+        """
+        SUM(sle.actual_qty) AS total_qty
+    """
+    )
     query = f"""
         SELECT 
             sle.item_code,
