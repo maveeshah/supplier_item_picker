@@ -1,5 +1,5 @@
 {
- "add_total_row": 0,
+ "add_total_row": 1,
  "columns": [],
  "creation": "2024-07-02 23:38:34.671098",
  "disabled": 0,
@@ -9,7 +9,7 @@
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2024-07-02 23:38:34.671098",
+ "modified": "2024-09-18 10:26:38.676772",
  "modified_by": "Administrator",
  "module": "Supplier Item Picker",
  "name": "Display and Storage Warehouse Stock Summary",
@@ -26,5 +26,6 @@
   {
    "role": "Accounts Manager"
   }
- ]
+ ],
+ "timeout": 0
 }
