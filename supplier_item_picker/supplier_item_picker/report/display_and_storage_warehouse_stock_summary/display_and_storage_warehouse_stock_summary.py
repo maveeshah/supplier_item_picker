@@ -16,6 +16,7 @@ def execute(filters=None):
 
     return columns, data
 
+
 def get_columns():
     columns = [
         {
@@ -44,35 +45,45 @@ def get_columns():
             "fieldtype": "Link",
             "options": "Brand",
             "width": 175,
-        }
+        },
     ]
-    
+
     warehouses = get_warehouses()
 
-    for warehouse in warehouses:
-        columns.append({
-            "label": _(f"{warehouse} Qty"),
-            "fieldname": frappe.scrub(f"{warehouse}_qty"),
-            "fieldtype": "Float",
-            "width": 150,
-        })
-    
+    # Only add warehouse columns if warehouses exist
+    if warehouses:
+        for warehouse in warehouses:
+            columns.append(
+                {
+                    "label": _(f"{warehouse} Qty"),
+                    "fieldname": frappe.scrub(f"{warehouse}_qty"),
+                    "fieldtype": "Float",
+                    "width": 150,
+                }
+            )
+
     return columns
 
 
 def get_data(filters):
     conditions, values = get_conditions(filters)
-    
+
     # Fetch all warehouses
     warehouses = get_warehouses()
-    
+
+    # If there are no warehouses, return empty data
+    if not warehouses:
+        return []
+
     # Create a dynamic SQL query to pivot the data
     select_statements = []
     for warehouse in warehouses:
-        select_statements.append(f"""
+        select_statements.append(
+            f"""
             SUM(CASE WHEN sle.warehouse = '{warehouse}' THEN sle.actual_qty ELSE 0 END) AS `{frappe.scrub(warehouse)}_qty`
-        """)
-    
+        """
+        )
+
     query = f"""
         SELECT 
             sle.item_code,
@@ -85,8 +96,7 @@ def get_data(filters):
         JOIN
             `tabItem` i ON sle.item_code = i.name
         WHERE
-            sle.docstatus = 1
-
+            sle.name IS NOT NULL
             {conditions}
         GROUP BY 
             sle.item_code
@@ -98,11 +108,15 @@ def get_data(filters):
 
 
 def get_warehouses():
-    warehouses = frappe.db.sql("""
+    warehouses = frappe.db.sql(
+        """
         SELECT DISTINCT warehouse FROM `tabStock Ledger Entry`
-    """, as_dict=True)
-    
-    return [w['warehouse'] for w in warehouses]
+    """,
+        as_dict=True,
+    )
+
+    return [w["warehouse"] for w in warehouses] if warehouses else []
+
 
 def get_conditions(filters):
     conditions = ""
