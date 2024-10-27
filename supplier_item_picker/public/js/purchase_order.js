@@ -28,6 +28,7 @@ function fetch_supplier_items(frm, filters) {
   });
 }
 
+
 function select_items_dialog(frm, items) {
   const fields = [
     {
@@ -46,10 +47,16 @@ function select_items_dialog(frm, items) {
   const item_html_field = item_dialog.fields_dict.items_list.$wrapper;
   item_html_field.empty();
 
-  // Construct a table with the items and a "Select All" checkbox
+  const search_html = `
+        <div>
+            <input type="text" id="item-search" placeholder="${__("Search items...")}" class="form-control">
+        </div>
+    `;
+  item_html_field.html(search_html);
+
   const table_html = `
         <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="items-table">
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="select-all-items" /> ${__(
@@ -65,8 +72,8 @@ function select_items_dialog(frm, items) {
         (item) => `
                         <tr>
                             <td><input type="checkbox" data-item-name="${item.name}" data-item-code="${item.item_code}" class="item-check"></td>
-                            <td>${item.name}</td>
-                            <td>${item.item_name}</td>
+                            <td class="item-code">${item.name}</td>
+                            <td class="item-name">${item.item_name}</td>
                         </tr>
                     `
       )
@@ -76,17 +83,28 @@ function select_items_dialog(frm, items) {
         </div>
     `;
 
-  item_html_field.html(table_html);
+  item_html_field.append(table_html);
 
-  // Add event listener for "Select All" checkbox
   item_html_field.find("#select-all-items").on("change", function () {
     const is_checked = $(this).is(":checked");
-    item_html_field.find(".item-check").prop("checked", is_checked);
+    item_html_field.find(".item-check:visible").prop("checked", is_checked);
+  });
+
+  item_html_field.find("#item-search").on("keyup", function () {
+    const search_value = $(this).val().toLowerCase();
+    $("#items-table tbody tr").filter(function () {
+      const item_code = $(this).find(".item-code").text().toLowerCase();
+      const item_name = $(this).find(".item-name").text().toLowerCase();
+      $(this).toggle(item_code.includes(search_value) || item_name.includes(search_value));
+    });
+
+    item_html_field.find("#select-all-items").prop("checked", false);
   });
 
   item_dialog.set_primary_action(__("Add Selected Items"), function () {
     const selected_items = [];
-    item_html_field.find(".item-check:checked").each(function () {
+
+    item_html_field.find(".item-check:visible:checked").each(function () {
       selected_items.push($(this).data("item-name"));
     });
 
@@ -100,6 +118,7 @@ function select_items_dialog(frm, items) {
 
   item_dialog.show();
 }
+
 
 function add_selected_items_to_form(frm, selected_items) {
   const existing_items = frm.doc.items.map(item => item.item_code);
