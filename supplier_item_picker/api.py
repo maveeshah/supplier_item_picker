@@ -10,7 +10,7 @@ import base64
 
 
 @frappe.whitelist()
-def get_items(supplier):
+def get_items(supplier=None):
     """
     Retrieves a list of items associated with a given supplier.
 
@@ -25,20 +25,20 @@ def get_items(supplier):
     If no items are found for the given supplier, an empty list is returned.
     """
     # Get item codes from Item Supplier
-    item_codes = frappe.get_all(
-        "Item Supplier", filters={"supplier": supplier}, fields=["parent"]
-    )
+    filters = {}
+    if supplier:
+        filters["supplier"] = supplier
+    item_codes = frappe.get_all("Item Supplier", filters=filters, fields=["parent"])
     item_codes = [item["parent"] for item in item_codes]
 
-    if not item_codes:
-        return []
+    item_filters = {}
+    if item_codes:
+        item_filters["name"] = ["in", item_codes]
 
     # Get item names from Item doctype
-    items = frappe.get_all(
-        "Item", filters={"name": ["in", item_codes]}, fields=["name", "item_name"]
-    )
+    items = frappe.get_all("Item", filters=item_filters, fields=["name", "item_name"])
 
-    return items or []  # Return an empty list if no items are found
+    return items or []
 
 
 @frappe.whitelist()
