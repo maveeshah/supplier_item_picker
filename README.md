@@ -37,7 +37,7 @@ To install the Supplier Item Picker app on your Frappe instance, follow these st
    Clone the repository to your server using the following command:
    
    ```bash
-   git clone https://github.com/[your-username]/[your-app-name].git
+   bench get-app git@github.com:maveeshah/supplier_item_picker.git
    ```
 
 2. **Install the App**:
@@ -50,10 +50,10 @@ To install the Supplier Item Picker app on your Frappe instance, follow these st
 
 3. **Restart the Bench**:
 
-   Restart the server to make sure everything loads properly:
+   Migrate the site to make sure everything loads properly:
    
    ```bash
-   bench restart
+   bench migrate
    ```
 
 ---
