@@ -45,7 +45,7 @@ To install the Supplier Item Picker app on your Frappe instance, follow these st
    Use the following command to install the app:
    
    ```bash
-   bench --site [your-site-name] install-app [your-app-name]
+   bench --site [your-site-name] install-app supplier_item_picker
    ```
 
 3. **Restart the Bench**:
